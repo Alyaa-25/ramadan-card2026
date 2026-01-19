@@ -1,0 +1,68 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="utf-8">
+  <title>بطاقة رمضان</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      text-align: center;
+      padding: 20px;
+    }
+    input, button {
+      padding: 12px;
+      font-size: 16px;
+      margin: 6px 0;
+      width: 100%;
+      max-width: 400px;
+    }
+    canvas {
+      margin-top: 15px;
+      max-width: 100%;
+    }
+  </style>
+</head>
+
+<body>
+
+<h3>اكتب اسمك</h3>
+<input id="name" placeholder="مثال: علياء العريفي">
+<br>
+<button onclick="downloadCard()">تحميل البطاقة</button>
+
+<canvas id="c"></canvas>
+
+<script>
+const img = new Image();
+img.src = "card.png";
+const canvas = document.getElementById("c");
+const ctx = canvas.getContext("2d");
+
+img.onload = () => {
+  canvas.width = img.width;
+  canvas.height = img.height;
+  ctx.drawImage(img, 0, 0);
+};
+
+function downloadCard() {
+  ctx.drawImage(img, 0, 0);
+  ctx.fillStyle = "#c99b2d";
+  ctx.font = "60px Arial";
+  ctx.textAlign = "center";
+  ctx.fillText(
+    document.getElementById("name").value,
+    canvas.width / 2,
+    canvas.height * 0.6
+  );
+
+  const a = document.createElement("a");
+  a.href = canvas.toDataURL("image/png");
+  a.download = "بطاقة-رمضان.png";
+  a.click();
+}
+</script>
+
+</body>
+</html>
